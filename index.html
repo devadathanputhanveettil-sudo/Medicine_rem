@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#087f8c" />
+  <title>MediReminder | Medication Management</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+  <section id="authView" class="auth-shell">
+    <div class="auth-brand">
+      <div class="brand-mark">✚</div>
+      <h1>MediReminder</h1>
+      <p>Your medication companion</p>
+    </div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button id="loginTab" class="tab active" type="button">Log in</button>
+        <button id="registerTab" class="tab" type="button">Create account</button>
+      </div>
+      <form id="authForm">
+        <div id="nameField" class="field hidden">
+          <label for="authName">Full name</label>
+          <input id="authName" name="name" autocomplete="name" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="authEmail">Email address</label>
+          <input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="authPassword">Password</label>
+          <input id="authPassword" name="password" type="password" minlength="8" required autocomplete="current-password" placeholder="At least 8 characters" />
+        </div>
+        <p id="authError" class="error"></p>
+        <button class="primary full" id="authSubmit" type="submit">Log in</button>
+      </form>
+      <p class="muted tiny">Your account keeps your medicine list private to your login on this demo server.</p>
+    </div>
+  </section>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="side-brand"><span class="brand-mark small">✚</span><span>MediReminder</span></div>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-page="medicines"><span>▤</span> My medicines</button>
+      <button class="nav-item" data-page="history"><span>◷</span> Dose history</button>
+      <div class="sidebar-bottom">
+        <div class="user-chip"><div class="avatar" id="userAvatar">U</div><div><strong id="userName">User</strong><small id="userEmail"></small></div></div>
+        <button id="logoutBtn" class="logout">↪ Log out</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><div class="eyebrow" id="todayLabel">YOUR HEALTH, ORGANIZED</div><h1 id="pageTitle">Dashboard</h1></div>
+        <button id="notificationBtn" class="secondary">♧ Enable notifications</button>
+      </header>
+
+      <section id="dashboardPage" class="page">
+        <div class="welcome-card">
+          <div><div class="welcome-kicker">DAILY OVERVIEW</div><h2 id="welcomeText">Welcome back!</h2><p>Small reminders can help you stay on schedule.</p></div>
+          <div class="welcome-icon">✚</div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total medicines</span><span class="stat-icon teal">▤</span></div><strong id="totalCount">0</strong><small>In your medicine list</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Today's reminders</span><span class="stat-icon blue">◷</span></div><strong id="reminderCount">0</strong><small>Scheduled for today</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Doses recorded today</span><span class="stat-icon purple">✓</span></div><strong id="takenCount">0</strong><small>Taken doses logged today</small></article>
+        </div>
+        <div class="section-heading"><div><h2>Today's schedule</h2><p>Your medicines and reminder times</p></div><button class="primary" id="addFromDashboard">＋ Add medicine</button></div>
+        <div id="scheduleList" class="medicine-list"></div>
+        <div class="disclaimer">Reminder times are based on your device's local time. Follow your healthcare professional's instructions. MediReminder does not prescribe or recommend medication.</div>
+      </section>
+
+      <section id="medicinesPage" class="page hidden">
+        <div class="section-heading"><div><h2>My medicines</h2><p>Manage your medicine list and reminder times.</p></div><button class="primary" id="addMedicineBtn">＋ Add medicine</button></div>
+        <div id="allMedicines" class="medicine-list"></div>
+      </section>
+
+      <section id="historyPage" class="page hidden">
+        <div class="section-heading"><div><h2>Dose history</h2><p>Your latest recorded taken and missed doses.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Medicine</th><th>Date</th><th>Recorded</th><th>Status</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="medicineModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-heading"><div><h2 id="modalTitle">Add medicine</h2><p>Enter the details from your prescription.</p></div><button class="icon-button" id="closeModal" aria-label="Close">×</button></div>
+      <form id="medicineForm">
+        <input type="hidden" id="medicineId" />
+        <div class="field"><label for="medicineName">Medicine name *</label><input id="medicineName" required maxlength="100" placeholder="e.g. Medicine name" /></div>
+        <div class="form-row">
+          <div class="field"><label for="dosage">Prescribed dosage *</label><input id="dosage" required maxlength="80" placeholder="e.g. As prescribed" /></div>
+          <div class="field"><label for="medicineTime">Reminder time *</label><input id="medicineTime" type="time" required /></div>
+        </div>
+        <div class="field"><label for="instructions">Instructions (optional)</label><textarea id="instructions" rows="2" maxlength="300" placeholder="e.g. Take with food, if prescribed"></textarea></div>
+        <div class="field"><label for="refillDate">Refill date (optional)</label><input id="refillDate" type="date" /></div>
+        <p id="medicineError" class="error"></p>
+        <div class="modal-actions"><button type="button" id="cancelModal" class="secondary">Cancel</button><button type="submit" class="primary">Save medicine</button></div>
+      </form>
+    </div>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
