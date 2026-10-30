@@ -56,17 +56,4 @@ The server creates `data.json` on first run. This file contains account records,
 - Add password reset, rate limiting, audit logging and automated tests
 - Add deployment configuration and CI using GitHub Actions
 
-## GitHub upload
-Create a new empty repository on GitHub, then run these commands in the project folder (replace `YOUR-USERNAME` and `YOUR-REPOSITORY`):
-
-```bash
-git init
-git add .
-git commit -m "Initial MediReminder implementation"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-git push -u origin main
-```
-
-
 
