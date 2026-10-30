@@ -68,4 +68,5 @@ git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
 git push -u origin main
 ```
 
-Never commit passwords, secret keys, `node_modules`, or `data.json`.
+
+
