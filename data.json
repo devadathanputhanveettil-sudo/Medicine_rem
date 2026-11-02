@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "7218c95b-3775-43df-8180-fa20029318c9",
+      "name": "Devan",
+      "email": "devadathanp07@gmail.com",
+      "passwordHash": "$2a$10$xB5AhpsLEPkKOJBKfWnULuB0SYQXVRxlNrUXtX4uJyAuy0DdjCDp2",
+      "createdAt": "2026-11-01T10:54:37.087Z"
+    }
+  ],
+  "medicines": [],
+  "doseLogs": []
+}
